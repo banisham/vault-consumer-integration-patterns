@@ -1,6 +1,6 @@
 package com.sc.hcv;
 
-import com.sc.hcv.client.VaultAuthenticator;
+import com.sc.hcv.auth.VaultAuthenticator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,13 +32,14 @@ public class VaultMain {
 
         VaultAuthenticator authenticator;
         if (authMethod.equals("approle")) {
-            authenticator = new VaultAuthenticator(vaultUrl, authPath, maxRetries, backoffInterval, maxBackoffInterval);
+            authenticator = new VaultAuthenticator(vaultUrl, maxRetries, backoffInterval, maxBackoffInterval);
         } else {
             System.out.println("Invalid authentication method specified in properties file");
             return;
         }
 
-        String result = authenticator.authenticate(roleId, secretId);
+        String result = authenticator.authenticateAppRole(roleId, secretId, authPath);
+
         System.out.println(result);
 
   }
