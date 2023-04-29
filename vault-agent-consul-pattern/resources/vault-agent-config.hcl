@@ -24,12 +24,18 @@ template {
   perms       = "0644"
   error_on_missing_key = true
   wait {
-    min = "15s"
-    max = "1m"
+    min = "5s"
+    max = "10s"
   }
 }
 
 listener "tcp" {
   address = "127.0.0.1:8202"
   tls_disable = true
+}
+
+exec {
+  command = "echo Inside the exec block"
+  wait = true
+  log_output = true
 }
