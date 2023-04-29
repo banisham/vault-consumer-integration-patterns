@@ -1,0 +1,14 @@
+{{ with secret "secret/myapp/config" }}
+username={{ .Data.username }}
+password={{ .Data.password }}
+hostname=my-oracle-db-host
+port=1521
+database=my-oracle-db-name
+{{ end }}
+{{ with secret "secret/myapp/sample-data2" }}
+username={{ .Data.username }}
+password={{ .Data.password }}
+hostname=my-oracle1-db-host
+port=1523
+database=my-oracle1-db-name
+{{ end }}
