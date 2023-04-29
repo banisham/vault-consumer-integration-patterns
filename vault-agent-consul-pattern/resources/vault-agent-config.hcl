@@ -8,15 +8,24 @@ auto_auth {
       role_id_file_path = "../input/role_id_file"
       secret_id_file_path = "../input/secret_id_file"
       remove_secret_id_file_after_reading = false
-
     }
-
   }
 
   sink "file" {
     config = {
       path = "../output/token_id_file"
     }
+  }
+}
+
+template {
+  source      = "../resources/template.ctmpl"
+  destination = "../output/output_file.json"
+  perms       = "0644"
+  error_on_missing_key = true
+  wait {
+    min = "15s"
+    max = "1m"
   }
 }
 

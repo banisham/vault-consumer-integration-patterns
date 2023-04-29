@@ -46,26 +46,6 @@ if not exist "%TOKEN_ID_FILE_PATH%" (
     goto wait_for_token
 )
 
-rem Wait for consul-template to start
-echo Waiting for consul-template to start...
-:wait_for_consul_template
-call :is_running "consul-template.exe" || (
-    ping -n 2 127.0.0.1 > nul
-    goto wait_for_consul_template
-)
-
-rem Run consul-template
-echo Running consul-template...
-start /b /wait consul-template.exe -config="%CONSUL_TEMPLATE_CONFIG_PATH%" >nul 2>&1
-
-rem Wait for consul-template to exit
-echo Waiting for consul-template to exit...
-:wait_for_consul_template_exit
-if call :is_running "consul-template.exe" (
-    ping -n 2 127.0.0.1 > nul
-    goto wait_for_consul_template_exit
-)
-
 rem Stop vault-agent
 echo Stopping vault agent...
 for /f "usebackq" %%i in ("%PID_FILE_PATH%") do taskkill /f /pid %%i >nul 2>&1
