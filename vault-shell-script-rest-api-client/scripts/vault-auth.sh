@@ -39,7 +39,7 @@ while [[ $num_retries -lt $MAX_RETRIES ]]; do
     vault_token=$(echo "$response" | jq -r ".auth.client_token")
     echo "Vault authentication successful"
     echo "Vault token: $vault_token"
-    ./vault-read-secrets.sh "$vault_token" "$VAULT_ADDR" "$KV_PATH"
+#   ./vault-read-secrets.sh "$vault_token" "$VAULT_ADDR" "$KV_PATH"
     exit 0
   else
     error_code=$(echo "$response" | jq -r ".errors[0]" 2>/dev/null || echo "unknown")
